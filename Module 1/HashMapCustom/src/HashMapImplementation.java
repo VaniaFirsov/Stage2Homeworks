@@ -3,6 +3,14 @@ public class HashMapImplementation<K,V> {
     private int size;
     private int capacity;
 
+    public int getSize() {
+        return size;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
     private static class Node<K,V>{
         K key;
         V value;
@@ -23,7 +31,7 @@ public class HashMapImplementation<K,V> {
         if(key==null){
             //если key==null, то индекс это 0
         }else{
-            keyIndex=Math.abs(key.hashCode())%capacity;
+            keyIndex=performHash(key);
         }
         Node<K,V> keyNode=buckets[keyIndex];
         while(keyNode!=null){
@@ -42,14 +50,14 @@ public class HashMapImplementation<K,V> {
     //добавляем ноду, если уже есть такой ключ
     //то меняем значение
     public V put(K key, V value){
-        if(size/capacity>=0.75){
+        if((double) size/capacity>=0.75){
             extendCapacity();
         }
         int keyIndex=0;
         if(key==null){
             //если key==null, то индекс это 0
         }else{
-            keyIndex=Math.abs(key.hashCode())%capacity;
+            keyIndex=performHash(key);
         }
         //проверяем, нет ли в бакете элемента с таким же ключом
         Node<K,V> keyNode=buckets[keyIndex];
@@ -77,26 +85,35 @@ public class HashMapImplementation<K,V> {
         return null;
     }
     private void extendCapacity(){
-        int newCapacity=capacity*2;
+        int newCapacity=this.capacity*2;
         Node<K,V>[] newBuckets=new Node[newCapacity];
         for(int i=0;i<capacity;i++){
             Node<K,V> current=buckets[i];
             while(current!=null){
                 Node<K,V> next=current.next;
-                int newIndext=Math.abs(current.key.hashCode())%newCapacity;
-                current.next=newBuckets[newIndext];
-                newBuckets[newIndext]=current;
+                int newIndex=0;
+                if(current.key==null){
+
+                }else{
+                    newIndex=Math.abs(current.key.hashCode())%newCapacity;
+                }
+                current.next=newBuckets[newIndex];
+                newBuckets[newIndex]=current;
                 current=next;
+
             }
         }
+        buckets=newBuckets;
+        this.capacity=newCapacity;
     }
+
     //удалем ноду по ключу
     public V remove(K key){
         int keyIndex=0;
         if(key==null){
             //если key==null, то индекс это 0
         }else{
-            keyIndex=Math.abs(key.hashCode())%capacity;
+            keyIndex=performHash(key);
         }
         Node<K,V> current=buckets[keyIndex];
         Node<K,V> previous=null;
@@ -126,5 +143,9 @@ public class HashMapImplementation<K,V> {
             current=current.next;
         }
         return null;
+    }
+    private int performHash(K key){
+        int keyIndex=Math.abs(key.hashCode())%capacity;
+        return keyIndex;
     }
 }
