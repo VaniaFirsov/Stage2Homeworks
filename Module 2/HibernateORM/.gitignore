@@ -1,5 +1,5 @@
 target/
-Module 1/
+"Module 1"/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
