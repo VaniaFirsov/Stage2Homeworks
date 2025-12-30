@@ -4,6 +4,7 @@ import ru.firsov.service.UserService;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
+import ru.firsov.User;
 
 public class ConsoleMenu {
 
