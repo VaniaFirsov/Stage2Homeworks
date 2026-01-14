@@ -2,7 +2,7 @@ package testutil;
 
 import ru.firsov.User;
 import ru.firsov.dto.UserRequestDTO;
-import ru.firsov.repository.UserRepository;
+import ru.firsov.model.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
