@@ -32,6 +32,6 @@ public class User {
 
     @PrePersist
     protected void onCreate() {
-        createdAt = LocalDateTime.now();  // Автоматическая установка времени
+        createdAt = LocalDateTime.now();
     }
 }

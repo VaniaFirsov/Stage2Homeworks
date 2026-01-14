@@ -1,4 +1,4 @@
-package ru.firsov.repository;
+package ru.firsov.model;
 
 import ru.firsov.User;
 import org.springframework.data.jpa.repository.JpaRepository;

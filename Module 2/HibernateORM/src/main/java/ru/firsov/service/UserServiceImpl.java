@@ -4,7 +4,7 @@ import ru.firsov.User;
 import ru.firsov.dto.UserRequestDTO;
 import ru.firsov.dto.UserResponseDTO;
 import ru.firsov.exception.UserNotFoundException;
-import ru.firsov.repository.UserRepository;
+import ru.firsov.model.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
