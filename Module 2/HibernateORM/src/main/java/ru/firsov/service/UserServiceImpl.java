@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final UserEventProducer userEventProducer;
 
     @Override
     @Transactional
@@ -39,6 +40,11 @@ public class UserServiceImpl implements UserService {
         User savedUser = userRepository.save(user);
         log.info("Пользователь создан: id={}, email={}",
                 savedUser.getId(), savedUser.getEmail());
+
+        userEventProducer.sendUserEvent("CREATE",
+                savedUser.getEmail(),
+                savedUser.getName(),
+                savedUser.getId());
 
         return mapToResponseDTO(savedUser);
     }
@@ -112,8 +118,16 @@ public class UserServiceImpl implements UserService {
             throw new UserNotFoundException("Пользователь с id " + id + " не найден");
         }
 
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("Пользователь с id " + id + " не найден"));
+
         userRepository.deleteById(id);
         log.info("Пользователь удален: id={}", id);
+
+        userEventProducer.sendUserEvent("DELETE",
+                user.getEmail(),
+                user.getName(),
+                user.getId());
     }
 
     private UserResponseDTO mapToResponseDTO(User user) {
