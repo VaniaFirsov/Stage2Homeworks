@@ -40,8 +40,6 @@ public class EmailService {
             
             Ваш аккаунт на сайте ваш сайт был успешно создан.
             
-            С уважением,
-            Команда сайта
             """, name);
 
         sendSimpleMessage(email, subject, text);
@@ -54,8 +52,6 @@ public class EmailService {
             
             Ваш аккаунт был удалён.
             
-            С уважением,
-            Команда сайта
             """, name);
 
         sendSimpleMessage(email, subject, text);
